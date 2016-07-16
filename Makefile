@@ -8,7 +8,7 @@ SRCS_DIR	= ./srcs
 ##
 ## code like a boss
 ##
-CPPFLAGS	+= -W -Wextra -Wall
+CPPFLAGS	+= -W -Wextra -Wall -O2
 
 ##
 ## Libs
