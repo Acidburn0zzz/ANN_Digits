@@ -1,8 +1,11 @@
 #include "Simulation.hh"
 
+using namespace std;
+
 Simulation::Simulation() :
   _network({784, 15, 10}) {
-  loadData();
+  if (loadData() == false)
+    throw "Error while loading data";
   cout << "training images: " << _trainingImgs.size() << endl
        << "training labels: " << _trainingLbls.size() << endl
        << "test images: " << _testImgs.size() << endl
@@ -27,22 +30,27 @@ void Simulation::run() {
        << "%" << endl;
 }
 
-void Simulation::loadData() {
+bool	Simulation::loadData() {
+  int	error = 0;
+
   #pragma omp parallel sections
   {
     #pragma omp section
     {
-      _trainingImgs = _reader.getTrainingImgs(); // 45 M
+      _trainingImgs	= _reader.getTrainingImgs(); // 45 M
     }
     #pragma omp section
     {
-      _trainingLbls = _reader.getTrainingLbls(); // 59K
-      _testImgs = _reader.getTestImgs(); // 8M
-      _testLbls = _reader.getTestLbls(); // 10K
-      _network.fullyConnect(0, 1);
-      _network.fullyConnect(1, 2);
+      _trainingLbls	= _reader.getTrainingLbls(); // 59K
+      _testImgs		= _reader.getTestImgs(); // 8M
+      _testLbls		= _reader.getTestLbls(); // 10K
+      if (_network.fullyConnect(0, 1) == false)
+	++error;
+      if (_network.fullyConnect(1, 2) == false)
+	++error;
     }
   }
+  return error == 0;
 }
 
 double Simulation::toPercentage(double found, double total) const {
@@ -55,7 +63,7 @@ vector<double> Simulation::expectedOutput(double value) const {
   return expectedOutput;
 }
 
-double Simulation::getBest(vector<double> output) const {
+double Simulation::getBest(const vector<double> &output) const {
   int bestNb = -1;
   double bestValue = -1;
 

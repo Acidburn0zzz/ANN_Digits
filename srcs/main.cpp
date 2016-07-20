@@ -1,8 +1,17 @@
+#include <iostream>
 #include "Simulation.hh"
 
-int main() {
-  Simulation simulation;
+int	main() {
+  try {
+    // create the simulation
+    Simulation simulation;
 
-  simulation.run();
-  return 1;
+    // run it
+    simulation.run();
+  }
+  catch (const char *ex) {
+    std::cerr << "[Error]: " << ex << std::endl;
+    return -1;
+  }
+  return 0;
 }

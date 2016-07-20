@@ -1,9 +1,9 @@
 #include "MNISTReader.hh"
 
-const std::string MNISTReader::trainingImgFile = "data/train-images-idx3-ubyte";
-const std::string MNISTReader::trainingLblFile = "data/train-labels-idx1-ubyte";
-const std::string MNISTReader::testImgFile = "data/t10k-images-idx3-ubyte";
-const std::string MNISTReader::testLblFile = "data/t10k-labels-idx1-ubyte";
+const std::string MNISTReader::trainingImgFile	= "data/train-images-idx3-ubyte";
+const std::string MNISTReader::trainingLblFile	= "data/train-labels-idx1-ubyte";
+const std::string MNISTReader::testImgFile	= "data/t10k-images-idx3-ubyte";
+const std::string MNISTReader::testLblFile	= "data/t10k-labels-idx1-ubyte";
 
 MNISTReader::MNISTReader() :
   _endian(checkEndian())
